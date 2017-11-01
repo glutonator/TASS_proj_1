@@ -16,5 +16,5 @@ print(H.has_node("org.jboss.jbossas-jboss-as-parent-5.0.0.CR1"))
 #plt.show()
 
 
-nx.number_attracting_components(H)
+#nx.number_attracting_components(H)
 # is_attracting_component(H)
