@@ -21,6 +21,9 @@ print("koniec wczytywania")
 uuuu = list(nx.node_degree_xy(H))
 
 #avrage neighbor degree - to jest do tego pierwszego
+# edit to chyba nit, to dobre jest to: average_degree_connectivity
+
+ggg = dict(nx.average_degree_connectivity(H))
 
 xxx= list()
 yyy=list()
@@ -33,12 +36,33 @@ for i in uuuu:
     xxx.append(i[0])
     yyy.append(i[1])
 
-fig = plt
+# xxxxxx= list()
+# yyyyyy=list()
+
+# for i in range(0,len(ggg)):
+#     xxxxxx.append(i.)
+
+# for i in ggg:
+#     xxxxxx.append(i[0])
+#     yyyyyy.append(i[1])
+
+# fig = plt.figure()
+# plt.fig
+# fig2 = plt.figure()
+
 #fig = plt.figure()
 
-
+fig = plt.subplots(1, 1)
 plt.plot(xxx,yyy,"ro")
-fig.suptitle('No axes on this figure')  # Add a title so we know which it is
+fig2 = plt.subplots(1, 1)
+
+plt.plot(ggg.keys(),ggg.values(),"ro")
+plt.xscale('log')
+plt.yscale('log')
+
+#plt.plot(uuuu,"ro")
+
+#fig.suptitle('No axes on this figure')  # Add a title so we know which it is
 
 #ax_lst = plt.subplots(2, 2)  # a figure with a 2x2 grid of Axes
 
