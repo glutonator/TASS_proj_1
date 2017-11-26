@@ -12,16 +12,16 @@ print("koniec wczytywania")
 
 #assortatywnośc 1
 #temp = nx.degree_assortativity_coefficient(H)
-
+#print(temp)
 #print("drugie")
 #assortatywnośc peraosna w sumie to samo
 #temp2 = nx.degree_pearson_correlation_coefficient(H)
-
+#print(temp2)
 #ppp = list(H.nodes())
 
 #Generate node degree-degree pairs for edges in G.
-uuuu = list(nx.node_degree_xy(H))
-
+pair_degree = list(nx.node_degree_xy(H))
+ 
 #avrage neighbor degree - to jest do tego pierwszego
 # edit to chyba nit, to dobre jest to: average_degree_connectivity
 
@@ -34,7 +34,7 @@ yyy=list()
 #     xxx.append(i[0])
 #     yyy.append(i[1])
 
-for i in uuuu:
+for i in pair_degree:
     xxx.append(i[0])
     yyy.append(i[1])
 
@@ -54,8 +54,13 @@ for i in uuuu:
 
 #fig = plt.figure()
 
-fig = plt.subplots(1, 1)
-plt.plot(xxx,yyy,"ro")
+#fig = plt.subplots(1, 1)
+fig=plt.figure()
+ax = fig.add_subplot(111)
+ax.set_title('Assortativity Pearson')
+ax.set_xlabel('node degree')
+ax.set_ylabel('node degree')
+plt.plot(xxx,yyy,"ro",ms=1)
 
 fig2 = plt.subplots(1, 1)
 plt.plot(ggg.keys(),ggg.values(),"ro")
@@ -63,19 +68,19 @@ plt.xscale('log')
 plt.yscale('log')
 
 
-fig3 = plt.subplots(1, 1)
-# m,b = np.polyfit(ggg.keys(), ggg.values(), 1)
+# fig3 = plt.subplots(1, 1)
+# # m,b = np.polyfit(ggg.keys(), ggg.values(), 1)
 temp = list(ggg.keys())
 
 temp2=list(ggg.values())
-fit = np.polyfit(temp,temp2,1)
-fit_fn = np.poly1d(fit) 
-# fit_fn is now a function which takes in x and returns an estimate for y
+# fit = np.polyfit(temp,temp2,1)
+# fit_fn = np.poly1d(fit) 
+# # fit_fn is now a function which takes in x and returns an estimate for y
 
-#tutaj rzeba zrobić tak by regresja liniowa była dopasowana już do z logarytmowanych dancyh, a nie do liniowych danych(osi) !!!!
-plt.plot(temp,temp2, 'yo', temp, fit_fn(temp), '--k')
-plt.xscale('log')
-plt.yscale('log')
+# #tutaj rzeba zrobić tak by regresja liniowa była dopasowana już do z logarytmowanych dancyh, a nie do liniowych danych(osi) !!!!
+# plt.plot(temp,temp2, 'yo', temp, fit_fn(temp), '--k')
+# plt.xscale('log')
+# plt.yscale('log')
 
 fig4 = plt.subplots(1, 1)
 #temp.remove(0)
@@ -86,16 +91,16 @@ plt.plot(temp3,temp4,"ro")
 
 
 #tutaj cos się zwaliło z logarytmowaniem małych wartośći
-fig5 = plt.subplots(1, 1)
-#fit = np.polyfit(temp,temp4,1,w=np.sqrt(temp2))
+# fig5 = plt.subplots(1, 1)
+# #fit = np.polyfit(temp,temp4,1,w=np.sqrt(temp2))
 
-def func(x, a, b):
-    ttt =a * np.exp(b * x)
-    return ttt
+# def func(x, a, b):
+#     ttt =a * np.exp(b * x)
+#     return ttt
 
-fit, fit2=sc.optimize.curve_fit(lambda t,a,b: a*np.exp(b*t),  temp,  temp2)
-print(fit)
-print(fit2)
+# fit, fit2=sc.optimize.curve_fit(lambda t,a,b: a*np.exp(b*t),  temp,  temp2)
+# print(fit)
+# print(fit2)
 #fit = np.polyfit(np.log(temp),np.log(temp2),1)
 #fit_fn = np.poly1d(fit) 
 # # fit_fn is now a function which takes in x and returns an estimate for y
@@ -105,19 +110,19 @@ print(fit2)
 
 #plt.plot(temp3,temp4, 'yo', temp3, func(temp3, *fit), '--k')
 
-temp5 = list()
-for i in temp:
-    temp5.append(func(i,*fit))
+# temp5 = list()
+# for i in temp:
+#     temp5.append(func(i,*fit))
 
-#plt.plot(temp, func(temp, *fit), '--k')
-#plt.plot(temp, temp5, '--k')
-#plt.plot(temp3,temp4, 'yo', temp3, np.log(temp5), '--k')
-plt.plot(temp,temp2, 'yo', temp, temp5, '--k')
-#plt.plot(temp,temp2, 'yo')
-#plt.ylim([1,1000])
-plt.xscale('log')
-plt.yscale('log')
-#plt.show()
+# #plt.plot(temp, func(temp, *fit), '--k')
+# #plt.plot(temp, temp5, '--k')
+# #plt.plot(temp3,temp4, 'yo', temp3, np.log(temp5), '--k')
+# plt.plot(temp,temp2, 'yo', temp, temp5, '--k')
+# #plt.plot(temp,temp2, 'yo')
+# #plt.ylim([1,1000])
+# plt.xscale('log')
+# plt.yscale('log')
+# #plt.show()
 
 
 #############################
@@ -126,7 +131,14 @@ plt.yscale('log')
 #  to nie muszę skalować osi wykresu
 ###############################
 
-fig6 = plt.subplots(1, 1)
+#fig6 = plt.subplots(1, 1)
+fig6 = plt.figure()
+ax = fig6.add_subplot(111)
+ax.set_title('Assortativity Average')
+ax.set_xlabel('node degree (k)')
+ax.set_ylabel('average degree of nearest neighbors of nodes with degree k')
+
+
 # fit999 = np.polyfit(np.log(temp),np.log(temp2),1)
 # fit_fn999 = np.poly1d(fit) 
 
@@ -141,7 +153,7 @@ print(polynomial)
 
 ys = polynomial(logA)
 #ys = polynomial(temp2)
-plt.plot(logA, logB, 'yo', logA, ys, '--k')
+plt.plot(logA, logB, 'yo', logA, ys, '--k',ms=1)
 #plt.plot(temp2, ys)
 plt.ylim([0,7])
 plt.xlim([0,10])

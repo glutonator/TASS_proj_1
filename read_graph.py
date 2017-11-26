@@ -7,16 +7,30 @@ import matplotlib.pyplot as plt
 print("poczatke wczytywania")
 #H = nx.read_gml('C:\\Users\\Filip\Documents\\GitHub\\TASS_proj\\test_new.gml')
 H = nx.read_gml('C:\\Users\\Filip\Documents\\GitHub\\TASS_proj\\test.gml')
+# print("dir")
+# print(nx.is_directed(H))
 print("koniec wczytywania")
-print(H.has_node(0))
-print(H.has_node("acegisecurity-acegi-security-0.5"))
-print(H.has_node("org.jboss.jbossas-jboss-as-parent-5.0.0.CR1"))
+# print(H.has_node(0))
+# print(H.has_node("acegisecurity-acegi-security-0.5"))
+# print(H.has_node("org.jboss.jbossas-jboss-as-parent-5.0.0.CR1"))
 
-print("test")
-print(nx.is_connected(H))
+# print("test")
+# print(nx.is_connected(H))
 #lista polaczonych nodow
+##################################
 temp = list(sorted(nx.connected_component_subgraphs(H),key=len,reverse=True))
-nx.write_gml(temp[0], 'C:\\Users\\Filip\Documents\\GitHub\\TASS_proj\\max_sklad_spoj.gml')
+#nx.write_gml(temp[0], 'C:\\Users\\Filip\Documents\\GitHub\\TASS_proj\\max_sklad_spoj.gml')
+print("max")
+print(len(temp))
+print("max_kon")
+count =0
+for i in temp:
+    if(len(i)>1):
+        count +=1
+        print(len(i))
+print("count")
+print(count)
+###############################
 # #liczba nodow
 # print("Nodes")
 # print(temp[0].number_of_nodes())
